@@ -4,29 +4,29 @@ const categoriasApi = new CategoriasApi();
 export default {
   data() {
     return {
-      categorias: [],
-      categoria: {},
+      categories: [],
+      category: {},
     };
   },
   async created() {
-    this.categorias = await categoriasApi.buscarTodasAsCategorias();
+    this.categories = await categoriasApi.buscarTodasAsCategorias();
   },
   methods: {
     async salvar() {
-      if (this.categoria.id) {
-        await categoriasApi.atualizarCategoria(this.categoria);
+      if (this.category.id) {
+        await categoriasApi.atualizarCategoria(this.category);
       } else {
-        await categoriasApi.adicionarCategoria(this.categoria);
+        await categoriasApi.adicionarCategoria(this.category);
       }
-      this.categoria = {};
-      this.categorias = await categoriasApi.buscarTodasAsCategorias();
+      this.category = {};
+      this.categories = await categoriasApi.buscarTodasAsCategorias();
     },
-    editar(categoria) {
-      Object.assign(this.categoria, categoria);
+    editar(category) {
+      Object.assign(this.category, category);
     },
-    async excluir(categoria) {
-      await categoriasApi.excluirCategoria(categoria.id);
-      this.categorias = await categoriasApi.buscarTodasAsCategorias();
+    async excluir(category) {
+      await categoriasApi.excluirCategoria(category.id);
+      this.categories = await categoriasApi.buscarTodasAsCategorias();
     },
   },
 };
@@ -36,16 +36,16 @@ export default {
   <h1>Categoria</h1>
   <hr />
   <div class="form">
-    <input type="text" v-model="categoria.descricao" placeholder="Descrição" />
+    <input type="text" v-model="category.description" placeholder="Description" />
     <button @click="salvar">Salvar</button>
   </div>
   <hr />
   <ul>
-    <li v-for="categoria in categorias" :key="categoria.id">
-      <span @click="editar(categoria)">
-        ({{ categoria.id }}) - {{ categoria.descricao }} -
+    <li v-for="category in categories" :key="category.id">
+      <span @click="editar(category)">
+        ({{ category.id }}) - {{ category.description }} -
       </span>
-      <button @click="excluir(categoria)">X</button>
+      <button @click="excluir(category)">X</button>
     </li>
   </ul>
 </template>
